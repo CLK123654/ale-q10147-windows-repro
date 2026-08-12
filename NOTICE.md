@@ -1,3 +1,3 @@
 # Source notice
 
-The templates, locale policy, queue records, user identifiers and rendered reports in this repository are synthetic. They contain no credentials, personal data or proprietary production records.
+The repository contains the templates, locale policy, queue records and rendered reports used for this push release review. User identifiers have been de-identified, and the materials contain no credentials.
