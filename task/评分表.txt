@@ -1,6 +1,6 @@
 总分：100分
 
-检查项：交付物和Node.js入口
+1. 交付物和Node.js入口
 分值：12分
 标准答案或判定规则：Prompt声明的源码与报告路径均可读；在input_data执行npm run compile:push于README.md规定时间内返回0。
 关键字段或路径：src/compile_push_templates.mjs；reports/template_locale_matrix.csv；reports/placeholder_mismatches.csv；reports/fallback_decisions.csv；reports/render_samples.csv；package.json中的compile:push。
@@ -12,7 +12,7 @@
 优先级：Gate项。
 所属层级：L8运行验证或可执行行为层。
 
-检查项：变量合同提取与差异
+2. 变量合同提取与差异
 分值：17分
 标准答案或判定规则：普通占位符和ICU plural外层变量进入合同；title与body分别比较；缺失和多余变量写入placeholder_mismatches.csv，并与resolved_locale的contract_status一致。
 关键字段或路径：push_templates.json各locale的title与body；placeholder_mismatches.csv全部字段；template_locale_matrix.csv的contract_status和mismatch_fields。
@@ -24,7 +24,7 @@
 优先级：高权重项。
 所属层级：L6领域计算与专业规则层。
 
-检查项：地区矩阵与回退链
+3. 地区矩阵与回退链
 分值：15分
 标准答案或判定规则：每个模板与required_locales组合均进入template_locale_matrix.csv；resolved_locale是fallback_chains中首个存在的地区，resolution准确区分exact、fallback和missing，fallback_path保留策略链。
 关键字段或路径：i18n_delivery_policy.json的default_locale、required_locales和fallback_chains；template_locale_matrix.csv全部字段。
@@ -36,7 +36,7 @@
 优先级：高权重项。
 所属层级：L5多源关联与字段一致性层。
 
-检查项：发送队列裁决与原因顺序
+4. 发送队列裁决与原因顺序
 分值：20分
 标准答案或判定规则：send_queue.csv的每个job_id均在fallback_decisions.csv出现一次；同一任务的模板、地区、合同、授权、活动和变量问题按block_reason_order选择首个block_reason；没有问题时decision为ready。
 关键字段或路径：fallback_decisions.csv的job_id、template_id、requested_locale、resolved_locale、resolution、decision、block_reason和block_detail；策略block_reason_order。
@@ -48,7 +48,7 @@
 优先级：高权重项。
 所属层级：L6领域计算与专业规则层。
 
-检查项：文本渲染、复数和变量转义
+5. 文本渲染、复数和变量转义
 分值：20分
 标准答案或判定规则：只有decision为ready的任务进入render_samples.csv；locale等于对应resolved_locale；复数值为1选择one，其余选择other；#替换为数值，普通变量按html_escape_variables处理。
 关键字段或路径：render_samples.csv的job_id、template_id、locale、title、body、variable_keys和escaped_variable_count；fallback_decisions.csv的decision与resolved_locale。
@@ -60,7 +60,7 @@
 优先级：高权重项。
 所属层级：L8运行验证或可执行行为层。
 
-检查项：报告结构、排序与跨报告追溯
+6. 报告结构、排序与跨报告追溯
 分值：9分
 标准答案或判定规则：Prompt声明的业务CSV使用规定表头及稳定主键；地区矩阵与合同差异按模板和地区关联，裁决与渲染按job_id关联，decision为ready时必须存在对应渲染行，其余裁决不得进入渲染报告。
 关键字段或路径：reports目录四份CSV的表头、template_id、locale、job_id、decision和resolved_locale。
@@ -72,7 +72,7 @@
 优先级：普通项。
 所属层级：L9跨产物一致性与可追溯层。
 
-检查项：本地数据处理边界
+7. 本地数据处理边界
 分值：7分
 标准答案或判定规则：完成版从本地模板、策略和发送队列取得业务事实，不调用真实推送、翻译、用户画像或活动管理服务。
 关键字段或路径：templates/push_templates.json；rules/i18n_delivery_policy.json；data/send_queue.csv；src/compile_push_templates.mjs。
