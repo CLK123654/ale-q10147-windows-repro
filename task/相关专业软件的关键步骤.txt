@@ -1,0 +1,8 @@
+1. 用Node.js读取push_templates.json、i18n_delivery_policy.json和send_queue.csv，核对模板消息、CSV列、required_locales、fallback_chains及block_reason_order可用。
+2. 解析send_queue.csv中的引号和转义双引号，将variables_json保留为完整字段并转换为队列变量对象。
+3. 扫描各模板title与body的花括号层级，收集普通占位符和ICU plural最外层变量，按消息部件形成稳定合同。
+4. 以default_locale模板为基线比较每个翻译地区，分别记录title与body的missing_placeholder或extra_placeholder。
+5. 按required_locales展开地区矩阵，沿fallback_chains选择首个存在的locale，并把解析地区的合同状态写入矩阵。
+6. 为每条发送任务关联模板、回退结果和变量，根据block_reason_order从模板、地区、合同、授权、活动及缺变量问题中选择首个原因。
+7. 对ready任务选择one或other复数分支，替换#和普通变量，按html_escape_variables转义变量值，并确认文本不再含未展开表达式。
+8. 用Node.js写出四份CSV，按template_id、locale、field或job_id等业务主键排序，检查矩阵、差异、裁决和渲染结果能够互相追溯。
