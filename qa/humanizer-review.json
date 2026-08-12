@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "skill": "humanizer-zh",
+  "result": "PASS",
+  "reviewed_scope": [
+    "任务名称",
+    "任务概要",
+    "任务prompt",
+    "关键动作",
+    "评分表",
+    "环境依赖",
+    "相关专业软件的关键步骤",
+    "输入README",
+    "关键标准答案五页",
+    "任务规格转化"
+  ],
+  "scores": {
+    "directness": 10,
+    "rhythm": 9,
+    "trust": 10,
+    "authenticity": 9,
+    "concision": 9,
+    "total": 47
+  },
+  "notes": [
+    "评分删除固定交付数量与运行摘要，不抄样本ID、完整集合、固定计数或逐项结果，只保留输入规则、主键、字段、容差和复算关系",
+    "为地区矩阵、合同差异、投放裁决和渲染文本分别明确业务消费者",
+    "保留ICU plural、地区回退和原因优先级等专业难点，硬规则均来自输入策略",
+    "改写同构开场与机械验收句式，删去宣传性价值判断和防作弊口吻"
+  ],
+  "online_ai_detector_used_as_conclusion": false
+}

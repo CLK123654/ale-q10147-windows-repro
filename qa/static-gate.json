@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "result": "PASS",
+  "scanned_sources": 200,
+  "violations": [],
+  "answer_sheets": [
+    "交付物答案清单",
+    "固定字段答案",
+    "固定集合答案",
+    "固定数值答案",
+    "允许变体答案"
+  ],
+  "specification_sheets": [
+    "任务规格转化"
+  ],
+  "task_spec_row_count": 18,
+  "task_spec_column_count": 2,
+  "task_asset_id": "node_push_locale_disposition",
+  "task_asset_id_valid": true,
+  "forbidden_spec_labels": [],
+  "declared_delivery_paths": [
+    "reports/fallback_decisions.csv",
+    "reports/placeholder_mismatches.csv",
+    "reports/render_samples.csv",
+    "reports/template_locale_matrix.csv",
+    "src/compile_push_templates.mjs"
+  ],
+  "reference_paths": [
+    "reports/fallback_decisions.csv",
+    "reports/placeholder_mismatches.csv",
+    "reports/render_samples.csv",
+    "reports/template_locale_matrix.csv",
+    "src/compile_push_templates.mjs"
+  ],
+  "business_inputs": [
+    "input_data/templates/push_templates.json",
+    "input_data/rules/i18n_delivery_policy.json",
+    "input_data/data/send_queue.csv",
+    "input_data/starter/compile_push_templates.mjs"
+  ],
+  "business_inputs_present": true,
+  "humanizer_score": 47,
+  "candidate_score_answer_leak_hits": 0,
+  "online_ai_detector_used_as_conclusion": false
+}
