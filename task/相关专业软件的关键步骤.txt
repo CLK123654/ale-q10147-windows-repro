@@ -5,4 +5,4 @@
 5. 按required_locales展开地区矩阵，沿fallback_chains选择首个存在的locale，并把解析地区的合同状态写入矩阵。
 6. 为每条发送任务关联模板、回退结果和变量，根据block_reason_order从模板、地区、合同、授权、活动及缺变量问题中选择首个原因。
 7. 对ready任务选择one或other复数分支，替换#和普通变量，按html_escape_variables转义变量值，并确认文本不再含未展开表达式。
-8. 用Node.js写出四份CSV，按template_id、locale、field或job_id等业务主键排序，检查矩阵、差异、裁决和渲染结果能够互相追溯。
+8. 用Node.js写出Prompt声明的业务CSV，按template_id、locale、field或job_id等主键排序，并从裁决的resolved_locale回查矩阵和渲染结果。

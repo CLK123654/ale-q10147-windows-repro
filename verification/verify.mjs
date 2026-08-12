@@ -248,6 +248,20 @@ assert(JSON.stringify(workbookSheets(path.join(artifactRoot, "关键标准答案
 assert(JSON.stringify(workbookSheets(path.join(artifactRoot, "任务规格转化.xlsx"))) === JSON.stringify(["任务规格转化"]), "任务规格Sheet错误");
 const solutionText = parseZip(path.join(artifactRoot, "reference.zip")).get("src/compile_push_templates.mjs").toString("utf8");
 assert(!/\bJ00[1-9]\b|\bJ010\b|\bcart_nudge\b|\bcreator_live\b|\bsecurity_login\b|\bweekly_digest\b|https?:\/\/|node:net|node:http|fetch\s*\(/u.test(solutionText), "完成版模块含样本ID硬编码或外部网络调用");
+const staticReview = JSON.parse(fs.readFileSync(path.join(repoRoot, "qa", "static-review.json"), "utf8"));
+const scoreAnswerLeak = JSON.parse(fs.readFileSync(path.join(repoRoot, "qa", "score-answer-leak.json"), "utf8"));
+const candidateScore = fs.readFileSync(path.join(repoRoot, "task", "评分表.txt"), "utf8");
+const scoreLeakPatterns = [
+  /\b(?:J|T|P)[-_]?\d{2,}\b/giu,
+  /(?:完整结果集合|完整通过集合|完整拒绝集合|ready任务集合|blocked任务集合|渲染任务集合为|模板集合为|地区集合为)/giu,
+  /(?:固定行数|固定汇总数|总计为|总数为|恰好|共计).{0,8}\d+|\d+条(?:记录|任务|差异|结果)|\d+份(?:报告|文件)|\d+个(?:模板|地区|路径|结果)/giu,
+  /(?:依次为|分别为|整组|逐项为).{0,100}(?:；|,|，).{0,20}(?:；|,|，)/giu,
+  /(?:金额|价格|预算|费用|收入|成本).{0,20}\d+(?:\.\d+)?/giu,
+  /\b(?:J\d+|T\d+).{0,80}(?:ready|blocked|exact|fallback|missing|zh-Hant-HK|fr-CA|es-MX)/giu
+];
+const currentScoreLeakHits = scoreLeakPatterns.flatMap((pattern) => [...candidateScore.matchAll(pattern)].map((match) => match[0]));
+assert(staticReview.result === "PASS" && staticReview.task_spec_column_count === 2, "静态门禁或任务规格列数不合格");
+assert(scoreAnswerLeak.pass && scoreAnswerLeak.hits.length === 0 && currentScoreLeakHits.length === 0, "候选人评分表含有样本答案");
 
 const cleanRuns = [];
 for (const label of ["Q10147 第一次 空目录", "Q10147 第二次 中文 空格目录"]) {
@@ -313,7 +327,9 @@ const evidence = {
   attachment_sha256: attachmentSha256,
   workbook_checks: {
     answer_sheet_names: workbookSheets(path.join(artifactRoot, "关键标准答案.xlsx")),
-    specification_sheet_names: ["任务规格转化"]
+    specification_sheet_names: ["任务规格转化"],
+    task_spec_column_count: staticReview.task_spec_column_count,
+    candidate_score_answer_leak_hits: currentScoreLeakHits.length
   },
   platform_audit: {
     linux_executables: executableScan,
