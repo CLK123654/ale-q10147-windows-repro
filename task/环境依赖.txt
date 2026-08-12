@@ -1,3 +1,5 @@
-推送模板材料支持Windows11原生环境、macOS和Linux处理。主软件为Node.js24LTS，负责读取JSON与CSV、解析ICU plural结构、执行地区回退和投放裁决，并写出报告。PowerShell、Windows终端或系统终端只负责解压和运行npm命令；完成版仅使用Node.js内置模块，不安装第三方npm包。
+操作系统：Windows11、macOS或主流64位Linux。
 
-正式处理保持离线，不调用推送、翻译、用户画像或活动管理服务。执行账户需要读取templates、rules和data，并能在input_data下创建output。普通开发电脑的CPU与内存足以处理当前队列，无需GPU，磁盘只需容纳Node.js、模板和报表；入口应设置有限超时，若数分钟内没有结束，应检查地区回退环和ICU结构。不需要推送平台账号或管理员权限。CSV中的variables_json可能含逗号和转义字符，运行环境应保留UTF-8与常见行尾。
+主软件为Node.js20或更高版本，用于读取JSON与CSV、解析ICU plural结构、执行地区回退和投放裁决并写出报告。代码仅使用Node.js内置模块，无需安装第三方npm包。PowerShell、Windows终端或系统终端可用于解压和执行npm命令。
+
+适合当前发送队列规模的普通开发电脑CPU与内存即可完成处理，无需GPU。磁盘需容纳Node.js、模板材料和四份报表。执行账户需能读取templates、rules和data，并能在input_data下创建output。任务在本地完成，不依赖网络服务。入口需设置有限超时，覆盖本题批次处理并避免异常无限等待。
